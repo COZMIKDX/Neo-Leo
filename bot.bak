@@ -1,0 +1,324 @@
+/* Messy code below */
+
+
+///////////////// Glitch stuff /////////////////////////////////////////////////////
+const http = require('http');
+const express = require('express');
+const app = express();
+app.get("/", (request, response) => {
+  console.log(Date.now() + " Ping Received");
+  response.sendStatus(200);
+});
+app.listen(process.env.PORT);
+setInterval(() => {
+  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+}, 280000);
+////////////////////////////////////////////////////////////////////////////////////
+
+const Discord = require("discord.js");
+const client = new Discord.Client();
+const config = require("./config.json")
+const fs = require("fs")                //This module is required for modifying the config file on runtime.
+
+
+
+
+function getRandomInt(min,max)
+{
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+client.on("ready", () => {
+  console.log("This is Pequod! Coming in hot!");
+
+});
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////// Messages ///////////////////////////////////////////
+var postCount = 0;
+var embed = new Discord.RichEmbed();
+const phrases = ["you come here often?", "adadadadadada", "BITCHEEES!! WHACK WHACK WHACK WHACK", "Yo, you got some black?", "can you not?", "huh?", "CHOMBO", "sus", "that's kinda gay"]
+var phraseElem;
+client.on("message", (message) =>
+{
+    // counts posts
+    if (!message.author.bot)
+    {
+      postCount = postCount + 1;
+    }
+
+    // posts in pickle parade general channel when post count reaches 150.
+    if (postCount >= 150)
+    {
+        postCount = 0;
+        phraseElem = getRandomInt(0,8);
+        client.channels.get('163520281707544576').send(phrases[phraseElem]);
+    }
+
+
+  // If someone says ree.
+  if (message.content.toLowerCase().startsWith("ree"))
+  {
+      message.reply("REEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+  }
+  
+  
+  if (message.content.toLowerCase().startsWith("bitches"))
+  {
+      message.reply("WHACK WHACK WHACK WHACK");
+  }
+      
+
+  //----------------------- if someone says oof. -------------------------
+  if (message.content.toLowerCase().startsWith("oof"))
+  {
+      embed = new Discord.RichEmbed()
+        .setTitle("oof")
+        //.setAuthor()
+        .setColor(0xf1f442)
+        .setDescription("oof")
+        //.setFooter()
+        .setImage("https://t6.rbxcdn.com/b62b3d9a491833f233d41f3cd4afe205")
+        //.setThumbnail()
+        .setTimestamp()
+        //.setURL()
+        //.addField("")
+        //.addBlankField(true)
+
+        message.channel.send({embed});
+  }
+
+  //////----------------------------------- Neural Network Deterence Module (NNDM) ------------------------------//////
+  const cringeWords = ["neural network", "neural net", "attack it"];
+  const replies = ["oh?", "you know, that's real cool man.", "it sure is", "that's kinda gay", "lel yeah", "do it you won't", "DON'T LOOK AT ME", "bitch"]
+  var replyElem = 0;
+  if (cringeWords.some(word => message.content.includes(word)))
+  {
+    replyElem = getRandomInt(0,7);
+    if (message.content.includes("attack it"))
+    {
+        if (message.author.id == 135363197166288897)
+        {
+            message.reply(replies[replyElem]);
+        }
+    }
+    else
+    {
+      message.reply(replies[replyElem]);
+    }
+    // Or just do message.delete();
+  }
+
+
+  //////--------------------- Jeremy's Gentle Bullying --------------------//////
+  var replyAggro = 0;
+  const passaggro = ["Hilarious", "Oh, sweetie...", "Aren't you just the greatest?", "you would say that", "I hope the rest of your day is just as lovely as you are.", "You're so smart, you must be at the top of the bell curve. "];
+  if (message.content.includes("~~"))
+  {
+    replyAggro = getRandomInt(0,5);
+    message.reply(passaggro[replyAggro]);
+  }
+
+  
+/////////////---------------------- For the lulz --------------------///////////////////
+  if (message.content.toLowerCase().includes("kek") && !message.author.bot)
+    message.channel.send("lel");
+
+  if (message.content.toLowerCase().includes("lel") && !message.author.bot)
+      message.channel.send("kek");
+  
+  if (message.content.includes("marsh you have a message"))
+  {
+    message.channel.send("@Shimakaze's_Rear_Admiral#8326");
+    message.channel.send("@Shimakaze's_Rear_Admiral#8326");
+    message.channel.send("@Shimakaze's_Rear_Admiral#8326");
+    message.channel.send("@Shimakaze's_Rear_Admiral#8326");
+    message.channel.send("@Shimakaze's_Rear_Admiral#8326");
+  }
+  
+
+  if (message.content.includes("vote 2 kick"))
+  {
+    client.channels.get('163520281707544576').send("no.");
+  }
+  
+  
+  
+  //--- JeremyGate ---//
+  /*var jeremy = false;
+  if (message.author.id == 310914799154233345 || jeremy == true) 
+  {
+     jeremy = true;
+     message.channel.send("WHACK WHACK WHACK WHACK                                   wwwwwwwwwwweeeeeeeeeeeeeeeeeeeeeeeeeRRRRRRRRRRRRREEEEEE"); 
+  }
+  */
+  
+  if (message.content.includes("a random") || message.content.includes("planted"))
+  {
+    message.channel.send(".pick");
+  }
+
+///////-------------------- Owner only --------------------//////
+if ((message.author.id == 157899020054822912) && message.content.includes("I caught the bomber"))
+{
+  embed = new Discord.RichEmbed()
+        //.setTitle("You X Beat X Greed X Island!")
+        //.setAuthor()
+        .setColor(0xffffff)
+        //.setDescription("You dirty old man. Here you go anyways")
+        //.setFooter()
+        .setImage("http://i.imgur.com/nIau2PV.jpg")
+        //.setThumbnail()
+        //.setTimestamp()
+        //.setURL()
+        //.addField("")
+        //.addBlankField(true)
+
+        message.channel.send({embed});
+}
+
+
+  
+  
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+//                                  Prefix messages                                          //
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+  
+  var idString;
+  const channels = ['365995102499373059', '163520281707544576']
+  
+  if (!message.content.startsWith(config.prefix) || message.author.bot) return; // if the message doesn't start with the prefix, ignore it.
+
+  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);    // slice(config.prefix.length) truncates the length of the prefix from the message.
+                                                                                   // trim() removes unneeded spaces on both sides of the message.
+                                                                                   // split() I think tokenizes the message.
+  const command = args.shift().toLowerCase();                 //shift() pops the first element in the args array and returns it. The popped element is stored in the commandvar.
+  switch (command)
+  {
+    case "post":
+      let fagtype = args[0];
+      let board = args[1];
+      message.reply(`Hello ${message.author.username}. You're a(n) ${fagtype} who lives on /${board}/`);
+      break;
+
+    case "blah":
+      message.channel.send("bitch");
+      break;
+
+    case "loli":
+      embed = new Discord.RichEmbed()
+        .setTitle("Loli")
+        //.setAuthor()
+        .setColor(0xfc7fff)
+        .setDescription("You dirty old man. Here you go anyways")
+        //.setFooter()
+        .setImage("https://i.imgur.com/JrYGP25.png")
+        //.setThumbnail()
+        .setTimestamp()
+        //.setURL()
+        //.addField("")
+        //.addBlankField(true)
+
+        message.channel.send({embed});
+      break;
+
+    case "bday":
+      embed = new Discord.RichEmbed()
+        .setTitle("HAPPY BIRTHDAY!!!")
+        //.setAuthor()
+        .setColor(0xf3f72a)
+        //.setDescription("You dirty old man.")
+        //.setFooter()
+        .setImage("https://thumb1.shutterstock.com/display_pic_with_logo/522235/104525213/stock-photo-man-playing-with-party-blowers-104525213.jpg")
+        //.setThumbnail()
+        .setTimestamp()
+        //.setURL()
+        //.addField("")
+        //.addBlankField(true)
+
+        message.channel.send({embed});
+      break;
+      
+    case "look":
+      message.channel.send("DON'T LOOK AT ME!");
+      break;
+    
+    case "countedit" :
+      let number = args[0];
+      postCount = Number(number);
+      message.reply(postCount);
+      break;
+      
+    case "avatar" :
+        message.reply(message.author.avatarURL);
+      break;
+      
+    case "channel" :
+      idString = message.channel.id;
+      client.channels.get('390737035792482314').send(idString);
+      break;
+      
+    case "send" :
+      let text = args[0];
+      let chan = args[1];
+      if (message.author.id == 157899020054822912)
+      {
+        switch(chan)
+        {
+          case "pickle" :
+            chan = channels[1];
+            break;
+        }
+        client.channels.get(chan).send(text); //
+      }
+      break;
+    
+    case "caiden":
+    {
+      embed = new Discord.RichEmbed()
+      .setTitle("He is still hungry")
+        //.setAuthor()
+        .setColor(0x1db207)
+        //.setDescription("You dirty old man.")
+        //.setFooter()
+        .setImage("https://cdn.discordapp.com/attachments/320337473882292224/405129757282271232/IMG_20180122_164046.jpg")
+        //.setThumbnail()
+        .setTimestamp()
+        //.setURL()
+        //.addField("")
+        //.addBlankField(true)
+
+        message.channel.send({embed});
+    }
+      
+    case "leo":
+    {
+      embed = new Discord.RichEmbed()
+      .setTitle("The eater of worlds has entered the field!!!")
+        //.setAuthor()
+        .setColor(0x1db207)
+        .setDescription("Lock your refrigerator")
+        //.setFooter()
+        .setImage("https://media.discordapp.net/attachments/390737035792482314/409560012076351489/challenger_leo.png?width=545&height=663")
+        //.setThumbnail()
+        .setTimestamp()
+        //.setURL()
+        //.addField("")
+        //.addBlankField(true)
+
+        message.channel.send({embed});
+    }
+      
+    case "printcount":
+    {
+      message.reply(postCount);
+    }
+  }
+});
+
+client.login(process.env.TOKEN);
