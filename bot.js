@@ -1,20 +1,31 @@
 /* Messy code below */
-
-
-///////////////// Glitch stuff //////  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);///////////////////////////////////////////////
+///////////////// Glitch SERVER stuff ////////////////////////////////////////////////
+//The first file to be loaded is specified in packages.json. In this case, it is bot.js.
 const http = require('http');
 const express = require('express');
 const app = express();
+
+app.use(express.static('public'));
+
+
+// Send the html file
 app.get("/", (request, response) => {
   console.log(Date.now() + " Ping Received");
-  response.sendStatus(200);
+  response.sendFile(__dirname + '/myIndex.html');
+  //response.sendStatus(200); // This, for some reason, prevents the above sent html file from loading (or maybe even being sent) on the client's browser
 });
+
 app.listen(process.env.PORT);
+
 setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
 }, 280000);
 ////////////////////////////////////////////////////////////////////////////////////
 
+
+
+
+console.log("bot.js ACCESSED");
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json")
