@@ -11,7 +11,7 @@ app.use(express.static('public'));
 // Send the html file
 app.get("/", (request, response) => {
   console.log(Date.now() + " Ping Received");
-  response.sendFile(__dirname + '/views/myIndex.html');
+  response.sendFile(__dirname + '/views/index.html');
   //response.sendStatus(200); // This, for some reason, prevents the above sent html file from loading (or maybe even being sent) on the client's browser
 });
 
