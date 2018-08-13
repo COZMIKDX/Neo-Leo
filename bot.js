@@ -1,24 +1,40 @@
 /* Messy code below */
-
-
-///////////////// Glitch stuff //////  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);///////////////////////////////////////////////
+///////////////// Glitch SERVER stuff ////////////////////////////////////////////////
+//The first file to be loaded is specified in packages.json. In this case, it is bot.js.
 const http = require('http');
 const express = require('express');
 const app = express();
+
+app.use(express.static('public'));
+
+
+// Send the html file
 app.get("/", (request, response) => {
   console.log(Date.now() + " Ping Received");
-  response.sendStatus(200);
+  response.sendFile(__dirname + '/views/index.html');
+  //response.sendStatus(200); // This, for some reason, prevents the above sent html file from loading (or maybe even being sent) on the client's browser
 });
+
 app.listen(process.env.PORT);
+
 setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
 }, 280000);
 ////////////////////////////////////////////////////////////////////////////////////
 
+
+///////////////// Bot stuff from here on //////////////////////////////////////////
+
+console.log("bot.js ACCESSED");
+const fs = require("fs"); 
 const Discord = require("discord.js");
 const client = new Discord.Client();
+console.log("UWU");
 const config = require("./config.json")
-const fs = require("fs");           //This module is required for R/W to JSON files.
+
+          //This module is required for R/W to JSON files.
+
+
 
 const jsmegahal = require('jsmegahal');
 var megahal = new jsmegahal(1);
@@ -40,7 +56,47 @@ function getRandomInt(min,max)
     return finalNum;
 }
 
+function loadQuote()
+{
+  let data = fs.readFileSync("./quotes.json"); 
+  let quotesOb = JSON.parse(data);
+  return quotesOb;
+}
 
+function addQuote(newQuote)
+{
+  let quotesOb = loadQuote();
+  //first add the new quote to the object's array. Then stringify the object and write to the file (it'll overwrite).
+  quotesOb.quotes.push(newQuote);
+  console.log("ADD2: " + quotesOb.quotes);
+
+  fs.writeFile('quotes.json', JSON.stringify(quotesOb), (err) => {
+    if (err)
+    {
+      console.error(err);
+      return;
+    };
+  }
+  );
+}
+
+function requestQuote(random, quoteNumber)
+{
+  let quotesOb = loadQuote();
+  
+  /*if (random == true)
+  {
+     //return a random quote.
+  }*/
+  
+  //Make sure the requested number is in the array of quotes.
+  if (quoteNumber > (quotesOb.quotes.length - 1))
+    return "There's no quote here...";
+
+  return quotesOb.quotes[quoteNumber];
+}
+
+//Checks if a channel is disabled (normie mode)
 function channelIsDisabled(disabledChannels, message)
 {  
   var length = disabledChannels.length;
@@ -58,7 +114,7 @@ function channelIsDisabled(disabledChannels, message)
   }
 }
 
-
+//adds a channel to the disabled list
 function writeToDisabledChannels(disabledChannels)
 {
   fs.writeFile('./disabledChannels.json', JSON.stringify(disabledChannels), (err) => {
@@ -79,7 +135,7 @@ function megaHalAI(incomingMessage, message, aiActive, megahal)
   {   
     if (!message.author.bot && !message.content.includes(">") && !message.content.startsWith(".") && !message.content.includes("http"))
     {
-      if (message.content.includes("."))
+      if (message.content.includes('.'))
         megahal.addMass(message.content);
       else
         megahal.add(message.content);
@@ -163,9 +219,6 @@ function starters(incomingMessage, message, embed, isDisabled)
 
 
   
-  
-  
-
   if (incomingMessage.includes("marsh you have a message"))//marsh you have a message
   {
     
@@ -181,6 +234,13 @@ function starters(incomingMessage, message, embed, isDisabled)
   if (incomingMessage.includes("vote2kick"))
   {
     client.channels.get('163520281707544576').send("no.");
+    return;
+  }
+  
+  
+  if(incomingMessage.includes("thinking"))
+  {
+    message.channel.send("NO, YOU'RE ON DRUGS!!!");
     return;
   }
 }
@@ -229,14 +289,18 @@ function randoPosts(message)
 
 function spiderNameGen()
 {
-  let data = fs.readFileSync("./spodeGen.json");
-  let spodeGenOb = JSON.parse(data);
+  let data = fs.readFileSync("./spodeGen.json"); //load the spode file
+  let spodeGenOb = JSON.parse(data); //put the data in the spode file into an object after parsing it.
   
   let location    = spodeGenOb.Locations[getRandomInt(0,spodeGenOb.Locations.length - 1)];
   let bodyPart    = spodeGenOb.BodyPart[getRandomInt(0, spodeGenOb.BodyPart.length - 1)];
   let destruction = spodeGenOb.Destruction[getRandomInt(0, spodeGenOb.Destruction.length - 1)];
+  let modifier = "";
+  let rand = Math.random();
+  if (rand < .2)
+    modifier = spodeGenOb.Modifiers[getRandomInt(0, spodeGenOb.Modifiers.length - 1)];
  
-  return location + " " + bodyPart + " " + destruction;
+  return location + " " + bodyPart + " " + destruction + " " + modifier;
 }
 
 
@@ -262,6 +326,8 @@ var disabledChannelsLoaded = false;
 
 var conversate = false;
 var newMessage = false;
+
+var quotes = [];
 
 
 /////////////////////////////////////// start  ////////////////////////////////////////////
@@ -305,7 +371,6 @@ client.on("message", (message) =>
   
   
   
-    
   channelIsDisabled(disabledChannels, message);
   conversation(message, newMessage);
   starters(incomingMessage, message, embed, isDisabled);
@@ -323,7 +388,7 @@ client.on("message", (message) =>
   */
 
 ///////-------------------- Owner only --------------------///////
-if ((message.author.id == 157899020054822912) && incomingMessage.includes("I caught the bomber"))
+if (incomingMessage.includes("i caught the bomber"))
 {
   embed = new Discord.RichEmbed()
         //.setTitle("You X Beat X Greed X Island!")
@@ -350,13 +415,15 @@ if ((message.author.id == 157899020054822912) && incomingMessage.includes("I cau
   var idString;
   const channels = ['365995102499373059', '163520281707544576']
 
-  if (!incomingMessage.startsWith(config.prefix) || message.author.bot) return; // if the message doesn't start with the prefix, ignore it.
+  // if the message doesn't start with the prefix or the bot sent it, ignore it.
+  if (!incomingMessage.startsWith(config.prefix) || message.author.bot) return; 
 
-  const sentenceInput = incomingMessage;
+  const sentenceInput = incomingMessage; //Not used.
   const args = incomingMessage.slice(config.prefix.length).trim().split(/ +/g);    // slice(config.prefix.length) truncates the length of the prefix from the message.
                                                                                    // trim() removes unneeded spaces on both sides of the message.
                                                                                    // split() I think tokenizes the message.
-  const command = args.shift().toLowerCase();                 //shift() pops the first element in the args array and returns it. The popped element is stored in the commandvar.
+  const command = args.shift().toLowerCase();                 //shift() pops the first element in the args array and returns it. The popped element is stored in the command var.
+                                                              //The next element in args is probably an argument.
   switch (command)
   {
     case "loli":
@@ -395,6 +462,10 @@ if ((message.author.id == 157899020054822912) && incomingMessage.includes("I cau
 
     case "look":
       message.channel.send("DON'T LOOK AT ME!");
+      break;
+      
+    case "pepsi":
+      message.channel.send("No, you're on drugs!");
       break;
 
     case "countedit" :
@@ -486,12 +557,12 @@ if ((message.author.id == 157899020054822912) && incomingMessage.includes("I cau
       if (aiActive)
       {
         aiActive = false;
-        message.channel.send("now disabled");
+        message.channel.send("```\nMegaHal AI is now disabled\n```");
       }
       else if (!aiActive)
       {
         aiActive = true;
-        message.channel.send("now enabled");
+        message.channel.send("```\nMegaHal AI is now enabled\n```");
       }
     }
     break;
@@ -514,10 +585,10 @@ if ((message.author.id == 157899020054822912) && incomingMessage.includes("I cau
       
     case "speak":
     {
-      //let keyword = args[0];
-      //message.channel.send(message.content);
-      //megahal.getReplyFromSentehttp.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);;
-      message.channel.send(megahal.getReply()) // send(megahal.getReply(),{tts: true});
+      if (Object.keys(megahal.quads).length == 0) //Check if object is empty.
+        message.channel.send("```\nError: [No words available]\n```");
+      else
+        message.channel.send(megahal.getReply()) // send(megahal.getReply(),{tts: true});
     }
     break;
       
@@ -526,6 +597,31 @@ if ((message.author.id == 157899020054822912) && incomingMessage.includes("I cau
       let spiderName = spiderNameGen();
       message.channel.send(spiderName);
     }
+    break;
+      
+    case "quote":
+    {
+      // format is >quote [new quote]  or  >quote get [number of quote to get]
+            
+      if (args[0] != "get") //if we have an argument. (meaning we wanna add a quote, in this case.)
+      {
+        //incomingMessage.slice(config.prefix.length).trim().split();   //take incoming message and cut prefix, and command. Keep the rest and as a full string.
+        let newQuote = args[0] + " ";
+        for (let i = 1; i < args.length; i++)
+        {
+          newQuote = newQuote + args[i];
+          if (i != args.length - 1) newQuote = newQuote + " ";  
+        }
+        
+        addQuote(newQuote);
+      }
+          
+      else if (args[0] == "get") 
+      {
+        message.channel.send(requestQuote(false, args[1]));
+      }
+    }
+    break;
   }
 });
 

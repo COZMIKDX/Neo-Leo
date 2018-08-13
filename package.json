@@ -1,4 +1,4 @@
-{
+ {
   "//1": "describes your app and its dependencies",
   "//2": "https://docs.npmjs.com/files/package.json",
   "//3": "updating this file will download and update your packages",
@@ -10,8 +10,8 @@
     "start": "node bot.js"
   },
   "dependencies": {
-    "express": "^4.16.2",
-    "discord.js": "^11.2.1",
+    "express": "^4.16.3",
+    "discord.js": "^11.3.2",
     "jsmegahal": "^1.2.4"
   },
   "engines": {
@@ -20,8 +20,7 @@
   "repository": {
     "url": "https://glitch.com/edit/#!/neo-deo"
   },
-  "license": "MIT",
-  "keywords": [
+   "keywords": [
     "node",
     "glitch",
     "express"
