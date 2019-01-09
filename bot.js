@@ -694,14 +694,14 @@ if (incomingMessage.includes("i caught the bomber"))
       
     case "autismparty":
     { 
-      HTTP.open("POST", 'https://maker.ifttt.com/trigger/turn_light_rainbow/with/key/de9DCw59UDehjDwuK8LwA6');
+      HTTP.open("POST", process.env.lightautism);
       HTTP.send();
     }
     break;
     
     case "lightnormal":
     {
-      HTTP.open("POST", 'https://maker.ifttt.com/trigger/turn_light_normal/with/key/de9DCw59UDehjDwuK8LwA6');
+      HTTP.open("POST", process.env.lightnormal);
       HTTP.send();
     }
     break;
