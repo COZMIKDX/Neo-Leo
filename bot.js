@@ -5,6 +5,9 @@ const http = require('http');
 const express = require('express');
 const app = express();
 
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+const HTTP = new XMLHttpRequest();
+
 app.use(express.static('public'));
 
 
@@ -24,7 +27,7 @@ setInterval(() => {
 
 
 ///////////////// Bot stuff from here on //////////////////////////////////////////
-
+var util = require('util') //for printing objects with circulars.
 console.log("bot.js ACCESSED");
 const fs = require("fs"); 
 const Discord = require("discord.js");
@@ -37,7 +40,7 @@ const config = require("./config.json")
 
 
 const jsmegahal = require('jsmegahal');
-var megahal = new jsmegahal(1);
+var megahal = new jsmegahal(1);  //1 is the minimum number of words in a post for it to be saved
 
 
 
@@ -106,10 +109,13 @@ function channelIsDisabled(disabledChannels, message)
   }*/
   
   for (var i = 0; i < length; i++)
-  {    
-    if (message.channel.id == disabledChannels[i])
+  {   
+    if( message.guild != null)
     {
-      isDisabled = true;
+      if ((message.guild.id == disabledChannels[i]))
+      {
+        isDisabled = true;
+      }
     }
   }
 }
@@ -133,7 +139,7 @@ function megaHalAI(incomingMessage, message, aiActive, megahal)
 {
   if (aiActive)
   {   
-    if (!message.author.bot && !message.content.includes(">") && !message.content.startsWith(".") && !message.content.includes("http"))
+    if (!message.author.bot && !message.content.includes(">") && !message.content.startsWith(".") && !message.content.includes("http") && !isDisabled)
     {
       if (message.content.includes('.'))
         megahal.addMass(message.content);
@@ -218,8 +224,8 @@ function starters(incomingMessage, message, embed, isDisabled)
   }
 
 
-  
-  if (incomingMessage.includes("marsh you have a message"))//marsh you have a message
+  //Disabled for no bulli
+  /*if (incomingMessage.includes("marsh you have a message"))//marsh you have a message
   {
     
     message.channel.send({reply: message.channel.members.get('163719681503526912')});
@@ -228,21 +234,22 @@ function starters(incomingMessage, message, embed, isDisabled)
     message.channel.send({reply: message.channel.members.get('163719681503526912')});
     message.channel.send({reply: message.channel.members.get('163719681503526912')});
     return;
-  }
+  }*/ 
 
 
   if (incomingMessage.includes("vote2kick"))
   {
-    client.channels.get('163520281707544576').send("no.");
+    message.channel.send("no.");
     return;
   }
   
   
-  if(incomingMessage.includes("thinking"))
+  /*if(incomingMessage.includes("thinking"))
   {
     message.channel.send("NO, YOU'RE ON DRUGS!!!");
     return;
   }
+  */
 }
 
 
@@ -317,6 +324,8 @@ const passaggro = ["Hilarious", "Oh, sweetie...", "Aren't you just the greatest?
 var postCount = 0;
 const phrases = ["you come here often?", "adadadadadada", "BITCHEEES!! WHACK WHACK WHACK WHACK", "Yo, you got some black?", "can you not?", "huh?", "CHOMBO", "sus", "that's kinda gay"];
 
+const friendURLs = ["https://cdn.glitch.com/843b538e-c8b4-4e06-9e17-0de07a61c029%2Fchallenger_leo.png?1544592269001", "https://cdn.glitch.com/843b538e-c8b4-4e06-9e17-0de07a61c029%2FFightersPassDLC.png?1544592242890", "https://cdn.glitch.com/843b538e-c8b4-4e06-9e17-0de07a61c029%2FcaidenAlpha.png?1544592259586", "https://cdn.glitch.com/843b538e-c8b4-4e06-9e17-0de07a61c029%2FnewCaiden.jpg?1543260895298", "https://cdn.glitch.com/843b538e-c8b4-4e06-9e17-0de07a61c029%2FN_O_T_O_W_L_C_I_T_Y.PNG?1544592244642"];
+
 var aiActive = true;
 
 var disabledChannels = [];
@@ -328,6 +337,10 @@ var conversate = false;
 var newMessage = false;
 
 var quotes = [];
+
+var secretSanta = false;
+var secretSantaGuildList = [];
+var tempSS = 0;
 
 
 /////////////////////////////////////// start  ////////////////////////////////////////////
@@ -367,7 +380,8 @@ client.on("message", (message) =>
     });
   }
   
-  
+  if (secretSanta == true)
+  { tempSS++; console.log("number of messages: " + tempSS); console.log("Message contains: " + message.content)}
   
   
   
@@ -488,6 +502,12 @@ if (incomingMessage.includes("i caught the bomber"))
       writeToDisabledChannels(disabledChannels);
       message.channel.send("normies ree");
       break;
+      
+    case "guilddisable" :
+      disabledChannels.push(message.guild.id);
+      writeToDisabledChannels(disabledChannels);
+      message.channel.send("received");
+      break;
 
     case "send" :
       let text = args[0];
@@ -510,13 +530,17 @@ if (incomingMessage.includes("i caught the bomber"))
 
     case "caiden":
     {
+      var index = getRandomInt(2,3);
+      var url = friendURLs[index];
       embed = new Discord.RichEmbed()
       .setTitle("He is still hungry")
         //.setAuthor()
         .setColor(0x1db207)
         //.setDescription("You dirty old man.")
         //.setFooter()
-        .setImage("https://media.discordapp.net/attachments/320339084172066823/397275316894040064/caidenAlpha.png")
+        .setImage(url)
+        //https://media.discordapp.net/attachments/320339084172066823/397275316894040064/caidenAlpha.png
+      //
         //.setThumbnail()
         .setTimestamp()
         //.setURL()
@@ -529,13 +553,38 @@ if (incomingMessage.includes("i caught the bomber"))
 
     case "leo":
     {
+      var index = getRandomInt(0,1);
+      var url = friendURLs[index];
+      
       embed = new Discord.RichEmbed()
       .setTitle("The eater of worlds has entered the field!!!")
         //.setAuthor()
         .setColor(0x1db207)
         .setDescription("Lock your refrigerator")
         //.setFooter()
-        .setImage("https://media.discordapp.net/attachments/390737035792482314/409560012076351489/challenger_leo.png?width=545&height=663")
+        .setImage(url)
+        //.setThumbnail()
+        .setTimestamp()
+        //.setURL()
+        //.addField("")
+        //.addBlankField(true)
+
+        message.channel.send({embed});
+    }
+    break;
+      
+    case "marsh":
+    {
+      var index = getRandomInt(4,4);
+      var url = friendURLs[index];
+      
+      embed = new Discord.RichEmbed()
+      .setTitle("What is Marsh? We just don't know.")
+        //.setAuthor()
+        .setColor(0x1db207)
+        .setDescription("Hide your rope!")
+        //.setFooter()
+        .setImage(url)
         //.setThumbnail()
         .setTimestamp()
         //.setURL()
@@ -564,6 +613,12 @@ if (incomingMessage.includes("i caught the bomber"))
         aiActive = true;
         message.channel.send("```\nMegaHal AI is now enabled\n```");
       }
+    }
+    break;
+    
+    case "reset":
+    {
+      megahal = new jsmegahal(1);
     }
     break;
       
@@ -619,6 +674,195 @@ if (incomingMessage.includes("i caught the bomber"))
       else if (args[0] == "get") 
       {
         message.channel.send(requestQuote(false, args[1]));
+      }
+    }
+    break;
+      
+    case "lightoff":
+    {
+      HTTP.open("POST", 'https://maker.ifttt.com/trigger/turn_light_off/with/key/de9DCw59UDehjDwuK8LwA6');
+      HTTP.send();
+    }
+    break;
+      
+    case "lighton":
+    {
+      HTTP.open("POST", 'https://maker.ifttt.com/trigger/turn_light_on/with/key/de9DCw59UDehjDwuK8LwA6');
+      HTTP.send();
+    }
+    break;
+      
+    case "autismparty":
+    { 
+      HTTP.open("POST", process.env.lightautism);
+      HTTP.send();
+    }
+    break;
+    
+    case "lightnormal":
+    {
+      HTTP.open("POST", process.env.lightnormal);
+      HTTP.send();
+    }
+    break;
+      
+    case "secretsanta":
+    {
+      let channel = false;
+      let player = false;
+      
+      if (args[0] == "join")
+      {
+        if (secretSanta == true)
+        {       
+          for (let i = 0; (i < secretSantaGuildList.length) && (channel == false); i++)
+          {
+            //Check if this channel is already enrolled.
+            //If it is, check if the message's author is enrolled. If not, then enroll them.
+            //If the channel isn't enrolled, then enroll it and enroll the message author too.
+            if (secretSantaGuildList[i].channelid == message.channel.id)
+            {
+              channel = true;
+              
+              console.log("JOIN PrePush Players: " + util.inspect(secretSantaGuildList[i].players));
+
+              //check if this player is already enrolled.
+              for (let j = 0; (j < secretSantaGuildList[i].players.length) && (player == false); j++)
+              {
+                if (secretSantaGuildList[i].players[j].id == message.author.id)
+                {
+                  player = true;
+                  message.reply("You are already participating in this secret santa.");
+                }
+              }
+
+              //add the message author if they aren't already enrolled.
+              if (player == false)
+              {
+                secretSantaGuildList[i].players.push(message.author);
+
+                message.reply("You're now participating in this secret santa");
+                console.log("JOIN PostPush Players: " + util.inspect(secretSantaGuildList.players));
+              }
+            }
+          }
+
+          //add the channel if it wasn't found and add the message author too.
+          if (channel == false)
+          {
+            console.log("adding channel");
+            secretSantaGuildList.push({channelid: message.channel.id, players: []});
+            secretSantaGuildList[secretSantaGuildList.length - 1].players.push(message.author);
+            message.reply("You're now participating in this secret santa");
+          }
+
+        }
+        else
+        {
+          secretSanta = true;
+          secretSantaGuildList = [];
+          secretSantaGuildList.push({channelid: message.channel.id, players: []});
+          secretSantaGuildList[0].players.push(message.author);
+          message.channel.send("Secret santa session created.");
+          message.reply("You're now participating in this secret santa.");
+
+          //console.log("SS 1\n" + util.inspect(secretSantaGuildList));
+        }
+      }
+      
+      else if (args[0] == "start")
+      {
+        let channel = false;
+
+        console.log("Starting secret santa decision process."); //////////////////////////////////////////////////
+        if (secretSanta == true)
+        {
+          console.log
+          
+          //check if channel is ready.
+          let i; //for use in the selection process.
+          
+          for (i = 0; (i < secretSantaGuildList.length) && (channel == false); i++)
+          {
+            if (secretSantaGuildList[i].channelid == message.channel.id)
+            {
+              channel = true;
+              break;
+            }
+          }
+          
+          //where the decision and message sends.
+          if (channel == true)
+          { 
+            let tempArray = secretSantaGuildList[i].players.slice(0);
+            let p1 = 0;
+            
+            //console.log("START: Channel is true\n" + "tempArray length: " + tempArray.length + "\ntempArray User: " + tempArray[0].username + "\nlist User: " + secretSantaGuildList[i].players[0].username);      
+            
+            for (let j = 0; j < secretSantaGuildList[i].players.length; j++)
+            {
+              if((tempArray.length == 1) && (secretSantaGuildList[i].players[j].id == tempArray[0].id))
+              { 
+                console.log("Final person has no match!");
+                secretSantaGuildList[i].players[j].send("Error: You don't have a match. Tell the others and try again."); 
+                //no break needed. This only happens for the final entry in the players array.
+              }
+              
+              else
+              {
+                //do-while
+                do 
+                {
+                  p1 = getRandomInt(0, tempArray.length - 1);
+                }
+                while ((secretSantaGuildList[i].players[j].id == tempArray[p1].id));
+              
+                  
+                console.log(secretSantaGuildList[i].players[j].username + " is assigned to " + tempArray[p1].username + " index: " + p1);
+                secretSantaGuildList[i].players[j].send("You are secret santa for " + tempArray[p1].username);
+                
+                //console.log("players before splice: " + util.inspect(tempArray));
+                tempArray.splice(p1,1);
+                //console.log("players left: " + util.inspect(tempArray));
+              }
+            }
+          }
+          
+          else if (channel == false)
+            message.channel.send("You need to create a session first.");
+        }
+        
+        else if (secretSanta == false)
+          message.channel.send("You need to create a session first.");
+      }
+      
+      else if (args[0] == "exit")
+      {
+        for (let i = 0; i < secretSantaGuildList.length; i++)
+        {
+          if (secretSantaGuildList[i].channelid == message.channel.id)
+          {
+            secretSantaGuildList.splice(i,1);
+          }
+        }
+      }
+    }
+    break;
+      
+    case "numgen":
+    {
+      let num = 0;
+      let count = 0;
+      
+      while (count < 10)
+      { //decrease upper range of randoint func to simulate the secret santa 
+        //do
+        //{
+          num = getRandomInt(0, 3);
+        //} while (num == 1);
+        console.log(num);
+        //num = 0;
+        count++;
       }
     }
     break;
