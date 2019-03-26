@@ -40,7 +40,7 @@ const config = require("./config.json")
 
 
 const jsmegahal = require('jsmegahal');
-var megahal = new jsmegahal(1);  //1 is the minimum number of words in a post for it to be saved
+var megahal = new jsmegahal(1); //1 is the minimum number of words in a post for it to be saved
 
 
 
@@ -134,20 +134,121 @@ function writeToDisabledChannels(disabledChannels)
   );
 }
 
+var markov = 1;
+var megaLeo = new jsmegahal(markov);
+var megaAlexis = new jsmegahal(markov);
+var megaChristian = new jsmegahal(markov);
+var megaMarsh = new jsmegahal(markov);
+var megaCaiden = new jsmegahal(markov);
+var megaJeremy = new jsmegahal(markov);
 
-function megaHalAI(incomingMessage, message, aiActive, megahal)
+function getUserIDFromName(user)
 {
-  if (aiActive)
-  {   
-    if (!message.author.bot && !message.content.includes(">") && !message.content.startsWith(".") && !message.content.includes("http") && !isDisabled)
-    {
-      if (message.content.includes('.'))
-        megahal.addMass(message.content);
-      else
-        megahal.add(message.content);
-    }
+  let userid = "";
+  switch (user)
+  {
+    case "leo" : userid = "129338722612150272";
+    break;
+
+     case "alexis" : userid = "163674475127242752"
+    break;
+
+    case "christian" : userid = "157899020054822912"
+    break;
+
+    case "marsh" : userid = "163719681503526912"
+    break;
+
+    case "caiden" : userid = "166723074211708929"
+    break;
+      
+    case "jeremy" : userid = "310914799154233345"
+    break;
+  }
+  
+  return userid;
+}
+
+function getMegaHal(userHal) //userHal should be the id of the user you want.
+{
+  switch (userHal)
+		{
+			//leo
+			case "129338722612150272":
+				return megaLeo;
+			break;
+			
+			//Alexis
+			case "163674475127242752":
+				return megaAlexis;
+			break;
+			
+			//Christian
+			case "157899020054822912":
+				return megaChristian;
+			break;
+			
+			//Marsg
+			case "163719681503526912":
+				return megaMarsh;
+			break;
+			
+			//Caiden
+			case "166723074211708929":
+				return megaCaiden;
+			break;
+        
+      case "310914799154233345":
+        return megaJeremy;
+      break;
+		}
+  return "";
+}
+
+
+function saveMegaHal()
+{
+  let megahalArray = [megaLeo, megaAlexis, megaChristian, megaMarsh, megaCaiden]; //currently 5 elements.
+  let megahalArrayElemNum = 5;
+  for (let i = 0; i < megahalArrayElemNum; i++)
+  {
+    let filename = '/app/megahalSaves/megahal' + i + '.json';
+    fs.writeFile(filename, util.inspect(megahalArray[i]), (err) => {
+      if (err)
+      {
+        console.error(err);
+        return;
+      };
+      console.log('file written!');
+    });
   }
 }
+
+function megaHalAI(message, aiActive)
+{
+	if (aiActive)
+	{
+		let currentMegaHal = getMegaHal(message.author.id);
+	
+    if (currentMegaHal == "")
+      currentMegaHal = megahal;
+    
+		if (!message.author.bot && !message.content.includes(">") && !message.content.startsWith(".") && !message.content.includes("http") && !isDisabled)
+		{
+			if (message.content.includes('.'))
+      {
+				currentMegaHal.addMass(message.content);
+        megahal.addMass(message.content);
+      }
+			else
+      {
+				currentMegaHal.add(message.content);
+        megahal.add(message.content);
+      }
+		}
+	}
+}
+
 
 function conversation(message, newMessage)
 { 
@@ -285,7 +386,7 @@ function randoPosts(message)
       postCount = postCount + 1;
       
       // posts in pickle parade general channel when post count reaches 150.
-      if (postCount >= 150)
+      if (postCount >= 500)
       {
           postCount = 0;
           phraseElem = getRandomInt(0,8);
@@ -386,10 +487,10 @@ client.on("message", (message) =>
   
   
   channelIsDisabled(disabledChannels, message);
-  conversation(message, newMessage);
+  //conversation(message, newMessage);
   starters(incomingMessage, message, embed, isDisabled);
-  megaHalAI(incomingMessage, message, aiActive, megahal);
-  //randoPosts(message);
+  megaHalAI(message, aiActive);
+  randoPosts(message);
   NNDM(incomingMessage, message, cringeWords, replies);
   
   //--- JeremyGate ---//
@@ -524,7 +625,7 @@ if (incomingMessage.includes("i caught the bomber"))
             chan = '413914551025664020';
             break;
         }
-        client.channels.get(chan).send(text); //
+        client.channels.get(chan).send(text); // first three return a channel to do: channel.send(text)
       }
       break;
 
@@ -640,10 +741,27 @@ if (incomingMessage.includes("i caught the bomber"))
       
     case "speak":
     {
-      if (Object.keys(megahal.quads).length == 0) //Check if object is empty.
+      let user = args[0];
+      let currentMegaHal = megahal;
+      
+      if (user != null)
+      {
+        console.log("getting userid");
+        let userid = getUserIDFromName(user);
+        if (userid != "")
+          currentMegaHal = getMegaHal(userid)
+      }
+
+      /*if (Object.keys(megahal.quads).length == 0) //Check if object is empty.
         message.channel.send("```\nError: [No words available]\n```");
-      else
-        message.channel.send(megahal.getReply()) // send(megahal.getReply(),{tts: true});
+      else*/
+      message.channel.send(currentMegaHal.getReply()); // send(megahal.getReply(),{tts: true});
+    }
+    break;
+      
+    case "mtojson":
+    {
+      saveMegaHal();
     }
     break;
       
@@ -706,149 +824,6 @@ if (incomingMessage.includes("i caught the bomber"))
     }
     break;
       
-    case "secretsanta":
-    {
-      let channel = false;
-      let player = false;
-      
-      if (args[0] == "join")
-      {
-        if (secretSanta == true)
-        {       
-          for (let i = 0; (i < secretSantaGuildList.length) && (channel == false); i++)
-          {
-            //Check if this channel is already enrolled.
-            //If it is, check if the message's author is enrolled. If not, then enroll them.
-            //If the channel isn't enrolled, then enroll it and enroll the message author too.
-            if (secretSantaGuildList[i].channelid == message.channel.id)
-            {
-              channel = true;
-              
-              console.log("JOIN PrePush Players: " + util.inspect(secretSantaGuildList[i].players));
-
-              //check if this player is already enrolled.
-              for (let j = 0; (j < secretSantaGuildList[i].players.length) && (player == false); j++)
-              {
-                if (secretSantaGuildList[i].players[j].id == message.author.id)
-                {
-                  player = true;
-                  message.reply("You are already participating in this secret santa.");
-                }
-              }
-
-              //add the message author if they aren't already enrolled.
-              if (player == false)
-              {
-                secretSantaGuildList[i].players.push(message.author);
-
-                message.reply("You're now participating in this secret santa");
-                console.log("JOIN PostPush Players: " + util.inspect(secretSantaGuildList.players));
-              }
-            }
-          }
-
-          //add the channel if it wasn't found and add the message author too.
-          if (channel == false)
-          {
-            console.log("adding channel");
-            secretSantaGuildList.push({channelid: message.channel.id, players: []});
-            secretSantaGuildList[secretSantaGuildList.length - 1].players.push(message.author);
-            message.reply("You're now participating in this secret santa");
-          }
-
-        }
-        else
-        {
-          secretSanta = true;
-          secretSantaGuildList = [];
-          secretSantaGuildList.push({channelid: message.channel.id, players: []});
-          secretSantaGuildList[0].players.push(message.author);
-          message.channel.send("Secret santa session created.");
-          message.reply("You're now participating in this secret santa.");
-
-          //console.log("SS 1\n" + util.inspect(secretSantaGuildList));
-        }
-      }
-      
-      else if (args[0] == "start")
-      {
-        let channel = false;
-
-        console.log("Starting secret santa decision process."); //////////////////////////////////////////////////
-        if (secretSanta == true)
-        {
-          console.log
-          
-          //check if channel is ready.
-          let i; //for use in the selection process.
-          
-          for (i = 0; (i < secretSantaGuildList.length) && (channel == false); i++)
-          {
-            if (secretSantaGuildList[i].channelid == message.channel.id)
-            {
-              channel = true;
-              break;
-            }
-          }
-          
-          //where the decision and message sends.
-          if (channel == true)
-          { 
-            let tempArray = secretSantaGuildList[i].players.slice(0);
-            let p1 = 0;
-            
-            //console.log("START: Channel is true\n" + "tempArray length: " + tempArray.length + "\ntempArray User: " + tempArray[0].username + "\nlist User: " + secretSantaGuildList[i].players[0].username);      
-            
-            for (let j = 0; j < secretSantaGuildList[i].players.length; j++)
-            {
-              if((tempArray.length == 1) && (secretSantaGuildList[i].players[j].id == tempArray[0].id))
-              { 
-                console.log("Final person has no match!");
-                secretSantaGuildList[i].players[j].send("Error: You don't have a match. Tell the others and try again."); 
-                //no break needed. This only happens for the final entry in the players array.
-              }
-              
-              else
-              {
-                //do-while
-                do 
-                {
-                  p1 = getRandomInt(0, tempArray.length - 1);
-                }
-                while ((secretSantaGuildList[i].players[j].id == tempArray[p1].id));
-              
-                  
-                console.log(secretSantaGuildList[i].players[j].username + " is assigned to " + tempArray[p1].username + " index: " + p1);
-                secretSantaGuildList[i].players[j].send("You are secret santa for " + tempArray[p1].username);
-                
-                //console.log("players before splice: " + util.inspect(tempArray));
-                tempArray.splice(p1,1);
-                //console.log("players left: " + util.inspect(tempArray));
-              }
-            }
-          }
-          
-          else if (channel == false)
-            message.channel.send("You need to create a session first.");
-        }
-        
-        else if (secretSanta == false)
-          message.channel.send("You need to create a session first.");
-      }
-      
-      else if (args[0] == "exit")
-      {
-        for (let i = 0; i < secretSantaGuildList.length; i++)
-        {
-          if (secretSantaGuildList[i].channelid == message.channel.id)
-          {
-            secretSantaGuildList.splice(i,1);
-          }
-        }
-      }
-    }
-    break;
-      
     case "numgen":
     {
       let num = 0;
@@ -864,6 +839,12 @@ if (incomingMessage.includes("i caught the bomber"))
         //num = 0;
         count++;
       }
+    }
+    break;
+      
+    case "test":
+    {
+      message.channel.send("@everyone");
     }
     break;
   }

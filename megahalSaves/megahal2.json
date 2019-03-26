@@ -1,0 +1,19 @@
+jsMegaHal {
+  markov: 1,
+  defaultReply: '',
+  words: 
+   { 'you\'re': [ [Object] ],
+     supposed: [ [Object] ],
+     to: [ [Object] ],
+     stop: [ [Object] ],
+     Bitches: [ [Object] ],
+     Lek: [ [Object] ] },
+  quads: 
+   { 'you\'re': Quad { tokens: [Array], canStart: true, canEnd: false },
+     supposed: Quad { tokens: [Array], canStart: false, canEnd: false },
+     to: Quad { tokens: [Array], canStart: false, canEnd: false },
+     stop: Quad { tokens: [Array], canStart: false, canEnd: true },
+     Bitches: Quad { tokens: [Array], canStart: true, canEnd: true },
+     Lek: Quad { tokens: [Array], canStart: true, canEnd: true } },
+  next: { 'you\'re': [ 'supposed' ], supposed: [ 'to' ], to: [ 'stop' ] },
+  prev: { supposed: [ 'you\'re' ], to: [ 'supposed' ], stop: [ 'to' ] } }
