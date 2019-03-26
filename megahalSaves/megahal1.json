@@ -1,0 +1,7 @@
+jsMegaHal {
+  markov: 1,
+  defaultReply: '',
+  words: {},
+  quads: {},
+  next: {},
+  prev: {} }

@@ -1,0 +1,8 @@
+jsMegaHal {
+  markov: 1,
+  defaultReply: '',
+  words: { bitches: [ [Object] ] },
+  quads: 
+   { bitches: Quad { tokens: [Array], canStart: true, canEnd: true } },
+  next: {},
+  prev: {} }
