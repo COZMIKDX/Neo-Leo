@@ -7,7 +7,7 @@
   "description": "This bot is a leo backup",
   "main": "bot.js",
   "scripts": {
-    "start": "node bot.js"
+    "start": "node ./src/bot.js"
   },
   "dependencies": {
     "discord.js": "^11.3.2",
