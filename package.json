@@ -10,8 +10,8 @@
     "start": "node ./src/bot.js"
   },
   "dependencies": {
-    "discord.js": "^11.3.2",
-    "express": "^4.16.3",
+    "discord.js": "^11.5.1",
+    "express": "^4.16.4",
     "jsmegahal": "^1.2.4",
     "xmlhttp-request": "^0.4.1",
     "xmlhttprequest": "^1.8.0"

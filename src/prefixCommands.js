@@ -1,5 +1,8 @@
+//Not complete. I still need to make 
+
 const Discord = require("discord.js");
 const myUtils = require('./myUtils.js');
+
 
 exports.loli = function(message)
 {
@@ -102,5 +105,10 @@ exports.marsh = function(message)
 	//.addBlankField(true)
 
 	message.channel.send({embed});
+}
+
+exports.money = function(message)
+{
+  
 }
 
