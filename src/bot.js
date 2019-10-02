@@ -2,7 +2,7 @@
 ///////////////// Glitch SERVER stuff ////////////////////////////////////////////////
 //The first file to be loaded is specified in packages.json. In this case, it is bot.js.
 const http = require('http');
-const express = require('express');
+const express = require('express'); 
 const app = express();
 
 //Used for ifft requests.
@@ -14,15 +14,35 @@ app.use(express.static('public'));
 // Send the html file
 app.get("/", (request, response) => {
   console.log(Date.now() + " Ping Received");
-  response.sendFile(__dirname + '/views/index.html');
+  response.sendFile('/app/views/index.html');
   //response.sendStatus(200); // This, for some reason, prevents the above sent html file from loading (or maybe even being sent) on the client's browser
 });
 
+
+app.get("/atoc", (request, response) => {
+  console.log(Date.now() + " Ping Received");
+  response.sendFile('/app/views/alexistochristian.html');
+  //response.sendStaftus(200); // This, for some reason, prevents the above sent html file from loading (or maybe even being sent) on the client's browser
+});
+
+app.post("/funpost", (req, res) => {
+  res.send("swooce\n");
+  //client.channels.get('390737035792482314').send("testtextttt");
+});
+
+
+
+/*
+app.get("/alexistochristian", (request, response) => {
+  console.log(Date.now() + ": Sending amount of money Alexis owes Christian.")
+});
+*/
+
 app.listen(process.env.PORT);
 
-setInterval(() => {
+/*setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);
+}, 280000);*/
 ////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -39,6 +59,7 @@ const quote = require('./quote.js');
 const spiderGen = require('./spiderGen');
 const starters = require('./starters.js');
 const forFun = require('./forFun.js');
+const money = require('./money.js');
 
 var myMegaHal = require('./myMegaHal.js');
 
@@ -65,6 +86,8 @@ client.on("ready", () => {
   console.log("This is Pequod! Coming in hot!");
 
 });
+
+
 
 ////////////////////////////////////// Message input and reply ///////////////////////////////////////////
 client.on("message", (message) =>
@@ -133,7 +156,7 @@ switch (command)
 		break;
 
 	case "guilddisable" :
-		disabledChannels.push(message.guild.id);
+		disabledChannels.push(message.guild);
 		disabledChannels.writeToDisabledChannels(disabledChannels);
 		message.channel.send("received");
 		break;
@@ -194,6 +217,7 @@ switch (command)
 
 //Smart light//
 	case "lightoff":
+    // Getting an HTTP object ready and then sending it.
 		HTTP.open("POST", 'https://maker.ifttt.com/trigger/turn_light_off/with/key/de9DCw59UDehjDwuK8LwA6');
 		HTTP.send()
 	break;
@@ -227,6 +251,13 @@ switch (command)
 		idString = message.channel.id;
 		client.channels.get('390737035792482314').send(idString);
 		break;
+    
+  case "money" :
+    money.addDebt(args[0], message.author.id, message.channel);
+    break;
+    
+  case "debt" : 
+    money.debtQuery(message.channel);
   }
 });
 

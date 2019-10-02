@@ -1,0 +1,70 @@
+<html>
+  <head>
+    <title>NEO-LEO</title>
+    <meta name="description" content="The Pickle Parade DX Confrontation/Moderation Bot." charset="UTF-8">
+    <link id="favicon" rel="icon" href="https://cdn.glitch.com/843b538e-c8b4-4e06-9e17-0de07a61c029%2Fneo_deo_1yC_icon.ico?1524024440517" type="image/x-icon">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  
+  
+  
+  <body>
+    <center> 
+        <h1>
+          Alexis owes me money
+      </h1>
+      
+      <script>
+        /*nction init() {
+          imgObj = document.getElementById('alexisJo');
+          imgObj.style.position = 'absolute';
+          imgObj.style.top = '240px';
+          imgObj.style.left = '300px';
+          //gObj.style.visibility = 'hidden';
+          
+          jiggle();
+        }
+        
+        function jiggle() {
+          
+        }*/
+        
+        var animate, left=0, imgObj=null;
+
+        function init(){
+
+           imgObj = document.getElementById('myImage');
+           imgObj.style.position= 'absolute';
+           imgObj.style.top = '240px';
+           imgObj.style.left = '-300px';
+           imgObj.style.visibility='hidden';
+
+           moveRight();
+        }
+
+        function moveRight(){
+            left = parseInt(imgObj.style.left, 10);
+
+            if (10 >= left) {
+                imgObj.style.left = (left + 5) + 'px';
+                imgObj.style.visibility='visible';
+
+                animate = setTimeout(function(){moveRight();},20); // call moveRight in 20msec
+
+                //stopanimate = setTimeout(moveRight,20);
+            } else {
+                stop();
+            }
+            //f();
+        }
+
+        function stop(){
+           clearTimeout(animate);
+        }
+
+        window.onload = function() {init();};
+      </script>
+      <img id="myImage" src="https://cdn.glitch.com/843b538e-c8b4-4e06-9e17-0de07a61c029%2FPSYCHO_ALEXIS.png?v=1569440657289" style="margin-left:170px;" />
+    </center>
+  </body>
+</html>
