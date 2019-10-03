@@ -14,14 +14,14 @@ app.use(express.static('public'));
 // Send the html file
 app.get("/", (request, response) => {
   console.log(Date.now() + " Ping Received");
-  response.sendFile('/app/views/index.html');
+  response.sendFile('views/index.html');
   //response.sendStatus(200); // This, for some reason, prevents the above sent html file from loading (or maybe even being sent) on the client's browser
 });
 
 
 app.get("/atoc", (request, response) => {
   console.log(Date.now() + " Ping Received");
-  response.sendFile('/app/views/alexistochristian.html');
+  response.sendFile('views/alexistochristian.html');
   //response.sendStaftus(200); // This, for some reason, prevents the above sent html file from loading (or maybe even being sent) on the client's browser
 });
 
