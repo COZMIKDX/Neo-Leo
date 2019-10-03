@@ -1,5 +1,5 @@
 const fs = require("fs");
-const disabledChannelsPath = "/app/src/disabledChannels.json";
+const disabledChannelsPath = "src/disabledChannels.json";
 
 var disabledChannelsLoaded = false;
 
