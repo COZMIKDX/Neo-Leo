@@ -40,9 +40,9 @@ app.get("/alexistochristian", (request, response) => {
 
 app.listen(process.env.PORT);
 
-/*setInterval(() => {
+setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);*/
+}, 280000);
 ////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -99,7 +99,7 @@ client.on("message", (message) =>
   starters.starters(incomingMessage, message, isDisabled);
   myMegaHal.megaHalAI(message);
   forFun.randoPosts(message, postCountObj, client);
-  //forFun.NNDM(incomingMessage, message);
+  forFun.NNDM(incomingMessage, message);
 
   //--- JeremyGate ---//
   /*var jeremy = false;
@@ -258,6 +258,9 @@ switch (command)
     
   case "debt" : 
     money.debtQuery(message.channel);
+    
+  case "guilds" :
+    client.guilds.forEach(element => console.log(element.name));
   }
 });
 

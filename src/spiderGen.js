@@ -16,3 +16,4 @@ exports.spiderNameGen = function()
  
   return location + " " + bodyPart + " " + destruction + " " + modifier;
 }
+
