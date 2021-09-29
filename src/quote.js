@@ -1,6 +1,6 @@
 const fs = require("fs"); 
 
-const quotesPath = "src/quotes.json"
+const quotesPath = "/app/src/quotes.json"
 
 function loadQuote()
 {
