@@ -11,6 +11,7 @@ var megaChristian = new jsmegahal(markov);
 var megaMarsh = new jsmegahal(markov);
 var megaCaiden = new jsmegahal(markov);
 var megaJeremy = new jsmegahal(markov);
+//var megahal = megaLeo;
 
 function getUserIDFromName(user)
 {
@@ -82,7 +83,7 @@ exports.saveMegaHal = function()
   let megahalArrayElemNum = 5;
   for (let i = 0; i < megahalArrayElemNum; i++)
   {
-    let filename = '/app/megahalSaves/megahal' + i + '.json';
+    let filename = './megahalSaves/megahal' + i + '.json';
     fs.writeFile(filename, util.inspect(megahalArray[i]), (err) => {
       if (err)
       {
@@ -94,6 +95,7 @@ exports.saveMegaHal = function()
   }
 }
 
+// add data to megahal when anybody posts text that isn't a neo-leo command, dot command, or a url.
 exports.megaHalAI = function(message)
 {
 	if (aiActive)
@@ -106,15 +108,15 @@ exports.megaHalAI = function(message)
 		if (!message.author.bot && !message.content.includes(">") && !message.content.startsWith(".") && !message.content.includes("http")) //&& !isDisabled
 		{
 			if (message.content.includes('.'))
-      {
+			{
 				currentMegaHal.addMass(message.content);
-        megahal.addMass(message.content);
-      }
+				megahal.addMass(message.content);
+			}
 			else
-      {
+			{
 				currentMegaHal.add(message.content);
-        megahal.add(message.content);
-      }
+				megahal.add(message.content);
+			}
 		}
 	}
 }
@@ -144,7 +146,7 @@ exports.speak = function(user)
 		if (userid != "")
 			currentMegaHal = getMegaHal(userid)
 	}
-	
+	console.log(currentMegaHal.getReply());
 	return currentMegaHal.getReply();
 }
 
