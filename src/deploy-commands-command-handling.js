@@ -25,8 +25,12 @@ const rest = new REST({ version: '9' }).setToken(token);
 //use Routes.applicationGuildCommands(clientId, guildId).then(() => console.log('Successfully registered application commands.'))
 //    .catch (console.error); //for guild specific commands.
 // the {body: commands} is selecting the list of commands made above.
-rest.put(Routes.applicationCommands(clientId), { body: commands },);
+//rest.put(Routes.applicationCommands(clientId), { body: commands },);
 
 rest.put(Routes.applicationGuildCommands(clientId, pickleId), { body: commands })
+    .then(() => console.log('Successfully registered application commands.'))
+    .catch(console.error);
+
+rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
     .then(() => console.log('Successfully registered application commands.'))
     .catch(console.error);
