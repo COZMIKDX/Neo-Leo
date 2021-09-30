@@ -82,7 +82,7 @@ exports.saveMegaHal = function()
   let megahalArrayElemNum = 5;
   for (let i = 0; i < megahalArrayElemNum; i++)
   {
-    let filename = 'megahalSaves/megahal' + i + '.json';
+    let filename = '/app/megahalSaves/megahal' + i + '.json';
     fs.writeFile(filename, util.inspect(megahalArray[i]), (err) => {
       if (err)
       {
