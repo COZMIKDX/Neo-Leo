@@ -30,7 +30,7 @@ exports.starters = function(incomingMessage, message, isDisabled)
     //----------------------- if someone says oof. -------------------------
     if (incomingMessage.startsWith("oof"))
     {
-        let embed = new Discord.RichEmbed()
+        let embed = new Discord.MessageEmbed()
           .setTitle("oof")
           //.setAuthor()
           .setColor(0xf1f442)
@@ -43,7 +43,7 @@ exports.starters = function(incomingMessage, message, isDisabled)
           //.addField("")
           //.addBlankField(true)
 
-          message.channel.send({embed});
+          message.channel.send({embeds: [embed]});
         return;
     }
 
