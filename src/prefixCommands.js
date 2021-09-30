@@ -1,12 +1,13 @@
 //Not complete. I still need to make 
 
-const Discord = require("discord.js");
+//const Discord = require("discord.js");
+const {MessageEmbed} = require('discord.js');
 const myUtils = require('./myUtils.js');
 
 
 exports.loli = function(message)
 {
-	let embed = new Discord.RichEmbed()
+	const embed = new MessageEmbed()
 		.setTitle("Loli")
 		//.setAuthor()
 		.setColor(0xfc7fff)
@@ -19,12 +20,12 @@ exports.loli = function(message)
 		//.addField("")
 		//.addBlankField(true)
 
-		message.channel.send({embed});
+		message.channel.send({embeds: [embed]});
 }
 
 exports.bday = function(message)
 {
-	let embed = new Discord.RichEmbed()
+	let embed = new MessageEmbed()
 		.setTitle("HAPPY BIRTHDAY!!!")
 		//.setAuthor()
 		.setColor(0xf3f72a)
@@ -37,7 +38,7 @@ exports.bday = function(message)
 		//.addField("")
 		//.addBlankField(true)
 
-	message.channel.send({embed});
+	message.channel.send({ embeds: [embed] });
 }
 
 
@@ -47,7 +48,7 @@ exports.caiden = function(message)
 {
 	var index = myUtils.getRandomInt(2,3);
 	var url = friendURLs[index];
-	let embed = new Discord.RichEmbed()
+	let embed = new MessageEmbed()
 		.setTitle("He is still hungry")
 		//.setAuthor()
 		.setColor(0x1db207)
@@ -62,7 +63,7 @@ exports.caiden = function(message)
 		//.addField("")
 		//.addBlankField(true)
 
-	message.channel.send({embed});
+	message.channel.send({ embeds: [embed] });
 }
 
 exports.leo = function(message)
@@ -70,7 +71,7 @@ exports.leo = function(message)
 	var index = myUtils.getRandomInt(0,1);
 	var url = friendURLs[index];
 
-	let embed = new Discord.RichEmbed()
+	let embed = new MessageEmbed()
 		.setTitle("The eater of worlds has entered the field!!!")
 		//.setAuthor()
 		.setColor(0x1db207)
@@ -83,7 +84,7 @@ exports.leo = function(message)
 		//.addField("")
 		//.addBlankField(true)
 
-	message.channel.send({embed});
+	message.channel.send({ embeds: [embed] });
 }
 
 exports.marsh = function(message)
@@ -91,7 +92,7 @@ exports.marsh = function(message)
 	var index = myUtils.getRandomInt(4,4);
 	var url = friendURLs[index];
 
-	let embed = new Discord.RichEmbed()
+	let embed = new MessageEmbed()
 	.setTitle("What is Marsh? We just don't know.")
 	//.setAuthor()
 	.setColor(0x1db207)
@@ -104,7 +105,7 @@ exports.marsh = function(message)
 	//.addField("")
 	//.addBlankField(true)
 
-	message.channel.send({embed});
+	message.channel.send({ embeds: [embed] });
 }
 
 exports.money = function(message)
