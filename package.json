@@ -10,17 +10,21 @@
     "start": "node ./src/bot.js"
   },
   "dependencies": {
-    "discord.js": "^11.5.1",
-    "express": "^4.16.4",
+    "@discordjs/builders": "^0.6.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "discord-api-types": "^0.23.1",
+    "discord.js": "^13.1.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
     "jsmegahal": "^1.2.4",
     "xmlhttp-request": "^0.4.1",
     "xmlhttprequest": "^1.8.0"
   },
   "engines": {
-    "node": "8.9.1"
+    "node": "v16.9.1"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/neo-deo"
+    "url": "https://github.com/COZMIKDX/Neo-Leo"
   },
   "keywords": [
     "node",
