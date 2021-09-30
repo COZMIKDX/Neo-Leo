@@ -1,9 +1,9 @@
-const Discord = require("discord.js");
+const {MessageEmbed} = require("discord.js");
 
 //Figure out what to do with this. A starter maybe?
 if (incomingMessage.includes("i caught the bomber"))
 {
-  embed = new Discord.RichEmbed()
+  const embed = new MessageEmbed()
         //.setTitle("You X Beat X Greed X Island!")
         //.setAuthor()
         .setColor(0xffffff)
@@ -16,5 +16,5 @@ if (incomingMessage.includes("i caught the bomber"))
         //.addField("")
         //.addBlankField(true)
 
-        message.channel.send({embed});
+  message.channel.send({ embeds: [embed] });
 }

@@ -1,9 +1,12 @@
 /* Messy code below */
 ///////////////// Glitch SERVER stuff ////////////////////////////////////////////////
 //The first file to be loaded is specified in packages.json. In this case, it is bot.js.
+require('dotenv').config()
 const http = require('http');
 const express = require('express'); 
 const app = express();
+var util = require('util'); //for printing objects with circulars.
+const fs = require("fs");
 
 //Used for ifft requests.
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
@@ -47,16 +50,26 @@ setInterval(() => {
 
 
 ///////////////// Bot stuff from here on //////////////////////////////////////////
-var util = require('util'); //for printing objects with circulars.
-const fs = require("fs");
-const Discord = require("discord.js");
-const client = new Discord.Client();
+//const Discord = require("discord.js");
+const { Client, Collection, Intents } = require("discord.js");
+
+//const client = new Discord.Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+client.commands = new Collection();
+// Prepare a list of files in the commands directory.
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+// Add the commands. This is command handling.
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	client.commands.set(command.data.name, command);
+}
 
 const config = require("./config.json")
 const prefixCommands = require('./prefixCommands.js');
 const disabledChannels = require('./disabledChannels.js');
 const quote = require('./quote.js');
-const spiderGen = require('./spiderGen');
+const spiderGen = require('./spiderGen.js');
 const starters = require('./starters.js');
 const forFun = require('./forFun.js');
 const money = require('./money.js');
@@ -88,10 +101,26 @@ client.on("ready", () => {
 });
 
 
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return; // Make sure the message is a command.
+
+	const { commandName } = interaction;
+
+	if (commandName === 'ping') {
+		await interaction.reply('Pong! bot.js');
+	} else if (commandName === 'server') {
+		await interaction.reply(`Server info: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`);
+	} else if (commandName === 'user') {
+		await interaction.reply('User info.');
+	}
+});
+
+
 
 ////////////////////////////////////// Message input and reply ///////////////////////////////////////////
-client.on("message", (message) =>
+client.on('messageCreate', (message) =>//client.on("message", (message) =>
 {
+	console.log("MESSAGED")
   var incomingMessage = message.content.toLowerCase();
 
   //isDisabled = channelDisabledCheck(var obj = {disabledChannelsList, disabledChannels.length}, message);
@@ -144,7 +173,7 @@ switch (command)
 
 // etc features//
 	case "avatar" :
-		message.reply(message.author.avatarURL);
+		message.reply(message.author.avatarURL());
 		break;
 
 
@@ -264,4 +293,4 @@ switch (command)
   }
 });
 
-client.login(process.env.TOKEN);
+client.login(config.token); //process.env.TOKEN);

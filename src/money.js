@@ -1,5 +1,5 @@
 const fs = require("fs"); 
-const moneyLogPath = "/app/src/money.json";
+const moneyLogPath = "./money.json";
 
 let invalidInputInARow = 0;
 

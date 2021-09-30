@@ -3,7 +3,7 @@ const myUtils = require('./myUtils.js');
 
 exports.spiderNameGen = function()
 {
-  let data = fs.readFileSync("/app/src/spodeGen.json"); //load the spode file
+  let data = fs.readFileSync("./spodeGen.json"); //load the spode file
   let spodeGenOb = JSON.parse(data); //put the data in the spode file into an object after parsing it.
   
   let location    = spodeGenOb.Locations[myUtils.getRandomInt(0,spodeGenOb.Locations.length - 1)];
