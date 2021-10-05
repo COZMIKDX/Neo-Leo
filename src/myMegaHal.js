@@ -69,9 +69,9 @@ function getMegaHal(userHal) //userHal should be the id of the user you want.
 				return megaCaiden;
 			break;
         
-      case "310914799154233345":
-        return megaJeremy;
-      break;
+      		case "310914799154233345":
+        		return megaJeremy;
+      		break;
 		}
   return "";
 }
@@ -100,21 +100,35 @@ exports.megaHalAI = function(message)
 {
 	if (aiActive)
 	{
-		let currentMegaHal = getMegaHal(message.author.id);
-	
-    if (currentMegaHal == "")
-      currentMegaHal = megahal;
-    
+		// Save the input text data to megahal object specfically for a person.
+		// This is so I could make megahal say stuff a based off of only specific person's posts.
+		let currentMegaHal = getMegaHal(message.author.id); 
+		let defaultMegalHalOnly = true;
+
+		if (currentMegaHal == ""){ // Somebody posted and I didn't have a preset megahal object to save their speech to. Using default megahal object.
+			currentMegaHal = megahal;
+			defaultMegalHalOnly = false;
+		}
+		
+		// Save data as long as it's not a neo-leo command, some other dot command, or a url.
+		// Save to a default megahal or a preset if available.
 		if (!message.author.bot && !message.content.includes(">") && !message.content.startsWith(".") && !message.content.includes("http")) //&& !isDisabled
 		{
+			// Save 1 or more sentences
 			if (message.content.includes('.'))
 			{
-				currentMegaHal.addMass(message.content);
+				// Save to preset object as well if somebody with one talked.
+				if (defaultMegalHalOnly == false)
+					currentMegaHal.addMass(message.content);
+
 				megahal.addMass(message.content);
 			}
 			else
 			{
-				currentMegaHal.add(message.content);
+				// Save whatever was posted.
+				if (defaultMegalHalOnly == false)
+					currentMegaHal.add(message.content);
+					
 				megahal.add(message.content);
 			}
 		}
@@ -146,7 +160,7 @@ exports.speak = function(user)
 		if (userid != "")
 			currentMegaHal = getMegaHal(userid)
 	}
-	console.log(currentMegaHal.getReply());
+	//console.log(currentMegaHal.getReply());
 	return currentMegaHal.getReply();
 }
 
