@@ -269,11 +269,12 @@ switch (command)
 	case "countedit" :
 		let number = args[0];
 		postCountObj.postCount = Number(number);
-		message.reply(postCountObj.postCount);
+		message.reply(postCountObj.postCount.toString());
 		break;
 
-	case "printcount":{ message.reply(postCountObj.postCount); }
-	break;
+	case "printcount": 
+		message.reply(postCountObj.postCount.toString());
+		break;
 
 	case "channel" :
 		idString = message.channel.id;
