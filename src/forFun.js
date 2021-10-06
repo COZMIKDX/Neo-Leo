@@ -42,11 +42,13 @@ exports.randoPosts = function(message, postCountObj, client)
       postCountObj.postCount = postCountObj.postCount + 1;
 
       // posts in pickle parade general channel when post count reaches 150.
-      if (postCountObj.postCount >= 500)
+      if (postCountObj.postCount >= 100)
       {
-          postCountObj.postCount = 0;
-          phraseElem = myUtils.getRandomInt(0,8);
-          client.channels.get('163520281707544576').send(phrases[phraseElem]);
+        postCountObj.postCount = 0;
+        phraseElem = myUtils.getRandomInt(0,8);
+        // This had to be updated. Now you must get the cache first.
+        client.channels.cache.get('163520281707544576').send(phrases[phraseElem]);
+        //console.log(test1);
       }
     }
 }
