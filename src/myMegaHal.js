@@ -4,13 +4,14 @@ var util = require('util');
 
 var aiActive = true;
 var markov = 1;
-var megahal = new jsmegahal(1); //1 is the minimum number of words in a post for it to be saved
-var megaLeo = new jsmegahal(markov);
-var megaAlexis = new jsmegahal(markov);
-var megaChristian = new jsmegahal(markov);
-var megaMarsh = new jsmegahal(markov);
-var megaCaiden = new jsmegahal(markov);
-var megaJeremy = new jsmegahal(markov);
+var defaultReply = "NO DATA";
+var megahal = new jsmegahal(1, defaultReply); //1 is the minimum number of words in a post for it to be saved
+var megaLeo = new jsmegahal(markov, defaultReply);
+var megaAlexis = new jsmegahal(markov, defaultReply);
+var megaChristian = new jsmegahal(markov, defaultReply);
+var megaMarsh = new jsmegahal(markov, defaultReply);
+var megaCaiden = new jsmegahal(markov, defaultReply);
+var megaJeremy = new jsmegahal(markov, defaultReply);
 //var megahal = megaLeo;
 
 function getUserIDFromName(user)
