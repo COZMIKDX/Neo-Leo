@@ -1,14 +1,19 @@
-/* Messy code below */
-///////////////// Glitch SERVER stuff ////////////////////////////////////////////////
+/* My first node project. I am occasionally coming back to 
+   Clean things up because I made this before knew much about
+   node and javascript. I'm still working on learning more.
+ */
+
 //The first file to be loaded is specified in packages.json. In this case, it is bot.js.
-require('dotenv').config()
+
+// HTTP server stuff
+require('dotenv').config();
 const http = require('http');
 const express = require('express'); 
 const app = express();
 var util = require('util'); //for printing objects with circulars.
 const fs = require("fs");
 
-//Used for ifft requests.
+// Used for ifft requests.
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const HTTP = new XMLHttpRequest();
 
@@ -33,14 +38,7 @@ app.post("/funpost", (req, res) => {
   //client.channels.get('390737035792482314').send("testtextttt");
 });
 
-
-
-/*
-app.get("/alexistochristian", (request, response) => {
-  console.log(Date.now() + ": Sending amount of money Alexis owes Christian.")
-});
-*/
-
+// Listen for requests. Not Discord stuff.
 app.listen(process.env.PORT);
 
 setInterval(() => {
@@ -49,12 +47,12 @@ setInterval(() => {
 ////////////////////////////////////////////////////////////////////////////////////
 
 
-///////////////// Bot stuff from here on //////////////////////////////////////////
-//const Discord = require("discord.js");
+///////////////// Discord Bot stuff //////////////////////////////////////////
 const { Client, Collection, Intents } = require("discord.js");
-
-//const client = new Discord.Client({ intents: [Intents.FLAGS.GUILDS] });
+// client is the main discord bot app.
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+
+// New way to do commands in discord.js. I'm sticking with prefix commands for now, though.
 client.commands = new Collection();
 // Prepare a list of files in the commands directory.
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -153,10 +151,6 @@ client.on('messageCreate', (message) =>//client.on("message", (message) =>
                                                               //The next element in args is probably an argument.
 switch (command)
 {
-	case "loli":
-		prefixCommands.loli(message);
-		break;
-
 	case "bday":
 		prefixCommands.bday(message);
 		break;
