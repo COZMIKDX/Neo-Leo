@@ -154,6 +154,7 @@ exports.speak = function(user)
 {
 	let currentMegaHal = megahal;
 	
+	// Select a megahal storage that is isolated to a single user's posts.
 	if (user != null)
 	{
 		console.log("getting userid");
@@ -161,7 +162,9 @@ exports.speak = function(user)
 		if (userid != "")
 			currentMegaHal = getMegaHal(userid)
 	}
+
 	//console.log(currentMegaHal.getReply());
+	//
 	return currentMegaHal.getReply();
 }
 

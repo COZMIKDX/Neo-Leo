@@ -71,6 +71,7 @@ const spiderGen = require('./spiderGen.js');
 const starters = require('./starters.js');
 const forFun = require('./forFun.js');
 const money = require('./money.js');
+const owner = require('./owner.js');
 
 var myMegaHal = require('./myMegaHal.js');
 
@@ -98,6 +99,7 @@ client.on("ready", () => {
 
 });
 
+// Command handling stuff.
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
@@ -115,17 +117,19 @@ client.on('interactionCreate', async interaction => {
 
 
 ////////////////////////////////////// Message input and reply ///////////////////////////////////////////
-client.on('messageCreate', (message) =>//client.on("message", (message) =>
+client.on('messageCreate', (message) =>
 {
-	console.log("MESSAGED")
+	//console.log("MESSAGED")
   var incomingMessage = message.content.toLowerCase();
 
   //isDisabled = channelDisabledCheck(var obj = {disabledChannelsList, disabledChannels.length}, message);
   //conversation(message, newMessage);
   starters.starters(incomingMessage, message, isDisabled);
   myMegaHal.megaHalAI(message);
-  forFun.randoPosts(message, postCountObj, client);
+  //forFun.randoPosts(message, postCountObj, client);
+  forFun.randoSpeak(message, postCountObj, client);
   forFun.NNDM(incomingMessage, message);
+  owner.bomber(incomingMessage, message);
 
   //--- JeremyGate ---//
   /*var jeremy = false;
@@ -207,24 +211,6 @@ switch (command)
     case "mtojson":{ myMegaHal.saveMegaHal(); }
     break;
 
-    /*case "converse" :
-    {
-      if (conversate == false)
-      {
-        conversate = true;
-        message.channel.send("conversation mode on: " + conversate);
-      }
-
-      else if (conversate == true)
-      {
-        conversate = false;
-        message.channel.send("conversation mode off: " + conversate);
-      }
-    }
-    break;*/
-
-
-
 	case "spode":{ message.channel.send(spiderGen.spiderNameGen()); }
 	break;
 
@@ -249,8 +235,8 @@ switch (command)
 		HTTP.send();
 		break;
 
-	case "autismparty":
-		HTTP.open("POST", process.env.lightautism);
+	case "lightparty":
+		HTTP.open("POST", process.env.lightparty);
 		HTTP.send();
 		break;
 
@@ -274,17 +260,10 @@ switch (command)
 		idString = message.channel.id;
 		client.channels.get('390737035792482314').send(idString);
 		break;
-    
-  case "money" :
-    money.addDebt(args[0], message.author.id, message.channel);
-    break;
-    
-  case "debt" : 
-    money.debtQuery(message.channel);
-    
-  case "guilds" :
-    client.guilds.forEach(element => console.log(element.name));
-  }
+		
+	case "guilds" :
+		client.guilds.forEach(element => console.log(element.name));
+	}
 });
 
 client.login(config.token); //process.env.TOKEN);

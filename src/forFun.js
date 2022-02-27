@@ -1,4 +1,5 @@
 const myUtils = require('./myUtils.js');
+var myMegaHal = require('./myMegaHal.js');
 
 const cringeWords = ["neural network", "neural net", "attack it"];
 //exports.cringeWords = cringeWords;
@@ -51,4 +52,22 @@ exports.randoPosts = function(message, postCountObj, client)
         //console.log(test1);
       }
     }
+}
+
+// Random post using MegaHAL.
+exports.randoSpeak = function (message, postCountObj, client) {
+  message.channel.send(myMegaHal.speak(args[0]));
+
+  if (!message.author.bot) {
+    postCountObj.postCount = postCountObj.postCount + 1;
+
+    // posts in pickle parade general channel when post count reaches a specified number from across all servers.
+    if (postCountObj.postCount >= 100) {
+      postCountObj.postCount = 0;
+      // This had to be updated. It seems that you must now you must get the cache first if you want to post in a server without it being a reply.
+      let text = myMegaHal.speak();
+      client.channels.cache.get('163520281707544576').send(text);
+      console.log(text);
+    }
+  }
 }
