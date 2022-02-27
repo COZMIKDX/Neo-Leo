@@ -21,7 +21,7 @@ exports.starters = function(incomingMessage, message, isDisabled)
     //////-------------------------------------------------------------------//////
 
        // If someone says ree.
-    if (incomingMessage.startsWith("ree"))  //incomingMessage.toLowerCase()
+    if (incomingMessage.startsWith("ree") && !message.author.bot)  //incomingMessage.toLowerCase()
     {
         message.reply("REEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
         return;
@@ -49,19 +49,26 @@ exports.starters = function(incomingMessage, message, isDisabled)
 
     if (incomingMessage.includes("kek") && !message.author.bot)
     {
-      message.channel.send("lel");
+      let chance = myUtils.getRandomInt(1, 100);
+      if (chance > 75) {
+        message.channel.send("lel");
+      }
       return;
     }
 
     if (incomingMessage.includes("lel") && !message.author.bot)
     {
-      message.channel.send("kek");
+      let chance = myUtils.getRandomInt(1, 100);
+      if (chance > 75) {
+        message.channel.send("kek");
+      }
       return;
     }
   }
 
 
-
+// A reference to that one trip with my friends to eureka springs and some pissed off dude at mcdonalds that got kicked out, yelled "BITCHES",
+// and repeatedly slammed his hands against someone else's car.
   if (incomingMessage.startsWith("bitches"))
   {
       message.reply("WHACK WHACK WHACK WHACK");
