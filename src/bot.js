@@ -41,9 +41,6 @@ app.post("/funpost", (req, res) => {
 // Listen for requests. Not Discord stuff.
 app.listen(process.env.PORT);
 
-setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);
 ////////////////////////////////////////////////////////////////////////////////////
 
 
