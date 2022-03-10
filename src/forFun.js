@@ -56,8 +56,6 @@ exports.randoPosts = function(message, postCountObj, client)
 
 // Random post using MegaHAL.
 exports.randoSpeak = function (message, postCountObj, client) {
-  message.channel.send(myMegaHal.speak(args[0]));
-
   if (!message.author.bot) {
     postCountObj.postCount = postCountObj.postCount + 1;
 
