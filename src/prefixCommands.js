@@ -5,24 +5,6 @@ const {MessageEmbed} = require('discord.js');
 const myUtils = require('./myUtils.js');
 
 
-exports.loli = function(message)
-{
-	const embed = new MessageEmbed()
-		.setTitle("Loli")
-		//.setAuthor()
-		.setColor(0xfc7fff)
-		.setDescription("You dirty old man.")
-		//.setFooter()
-		.setImage("https://i.imgur.com/JrYGP25.png")
-		//.setThumbnail()
-		.setTimestamp()
-		//.setURL()
-		//.addField("")
-		//.addBlankField(true)
-
-		message.channel.send({embeds: [embed]});
-}
-
 exports.bday = function(message)
 {
 	let embed = new MessageEmbed()
@@ -108,8 +90,5 @@ exports.marsh = function(message)
 	message.channel.send({ embeds: [embed] });
 }
 
-exports.money = function(message)
-{
-  
-}
+exports.money = function(message){}
 
