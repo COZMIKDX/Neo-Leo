@@ -51,6 +51,7 @@ const { Client, Collection, Intents } = require("discord.js");
 // client is the main discord bot app.
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
+/*
 // New way to do commands in discord.js. I'm sticking with prefix commands for now, though.
 client.commands = new Collection();
 // Prepare a list of files in the commands directory.
@@ -61,18 +62,19 @@ for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	client.commands.set(command.data.name, command);
 }
+*/
 
 const config = require("./config.json")
-const prefixCommands = require('./prefixCommands.js');
-const disabledChannels = require('./disabledChannels.js');
-const quote = require('./quote.js');
-const spiderGen = require('./spiderGen.js');
-const starters = require('./starters.js');
-const forFun = require('./forFun.js');
-const money = require('./money.js');
-const owner = require('./owner.js');
+const prefixCommands = require('./commands/prefixCommands.js');
+const disabledChannels = require('./old_unused/disabledChannels.js');
+const quote = require('./old_unused/quote.js');
+const spiderGen = require('./tools_features/spiderGen.js');
+const starters = require('./shitposting/starters.js');
+const forFun = require('./shitposting/forFun.js');
+const money = require('./old_unused/money.js');
+const owner = require('./shitposting/owner.js');
 
-var myMegaHal = require('./myMegaHal.js');
+var myMegaHal = require('./tools_features/myMegaHal.js');
 
 
 /////////////////////// Functions //////////////////////////////////////////////////

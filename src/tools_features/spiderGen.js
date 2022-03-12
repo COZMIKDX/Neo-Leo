@@ -1,5 +1,5 @@
 const fs = require("fs");
-const myUtils = require('./myUtils.js');
+const myUtils = require('../myUtils.js');
 
 exports.spiderNameGen = function()
 {

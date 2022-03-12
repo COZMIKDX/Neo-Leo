@@ -1,6 +1,6 @@
 //const Discord = require("discord.js");
 const {MessageEmbed} = require('discord.js');
-const myUtils = require('./myUtils.js');
+const myUtils = require('../myUtils.js');
 
 // Node.js uses CommonJS format. So, it uses module.exports and require() rather than export and import.
 exports.bday = (message) =>
