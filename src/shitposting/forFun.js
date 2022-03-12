@@ -1,5 +1,5 @@
-const myUtils = require('./myUtils.js');
-var myMegaHal = require('./myMegaHal.js');
+const myUtils = require('../myUtils.js');
+var myMegaHal = require('../tools_features/myMegaHal.js');
 
 const cringeWords = ["neural network", "neural net", "attack it"];
 //exports.cringeWords = cringeWords;

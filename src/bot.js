@@ -51,6 +51,7 @@ const { Client, Collection, Intents } = require("discord.js");
 // client is the main discord bot app.
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
+/*
 // New way to do commands in discord.js. I'm sticking with prefix commands for now, though.
 client.commands = new Collection();
 // Prepare a list of files in the commands directory.
@@ -61,6 +62,7 @@ for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	client.commands.set(command.data.name, command);
 }
+*/
 
 const config = require("./config.json")
 const prefixCommands = require('./commands/prefixCommands.js');
