@@ -1,16 +1,18 @@
 /* My first node project. I am occasionally coming back to 
    Clean things up because I made this before knew much about
-   node and javascript. I'm still working on learning more.
+   node and javascript. Also, the it was too easy to run into both ES5 and ES6 tutorials
+   online at the time, as a newcomer to JS.
+   I'm still working on learning more.
  */
 
 //The first file to be loaded is specified in packages.json. In this case, it is bot.js.
 
 // HTTP server stuff
-require('dotenv').config();
+require('dotenv').config(); // Loads the .env contents.
 const http = require('http');
 const express = require('express'); 
 const app = express();
-var util = require('util'); //for printing objects with circulars.
+const util = require('util'); //for printing objects with circulars.
 const fs = require("fs");
 
 // Used for ifft requests.
