@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const myUtils = require('./myUtils.js');
+const myUtils = require('../myUtils.js');
 
 const passaggro = ["Hilarious", "Oh, sweetie...", "Aren't you just the greatest?", "you would say that", "I hope the rest of your day is just as lovely as you are.", "You're so smart, you must be at the top of the bell curve. "];
 
