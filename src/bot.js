@@ -64,15 +64,15 @@ for (const file of commandFiles) {
 
 const config = require("./config.json")
 const prefixCommands = require('./commands/prefixCommands.js');
-const disabledChannels = require('./disabledChannels.js');
-const quote = require('./quote.js');
-const spiderGen = require('./spiderGen.js');
+const disabledChannels = require('./old_unused/disabledChannels.js');
+const quote = require('./old_unused/quote.js');
+const spiderGen = require('./tools_features/spiderGen.js');
 const starters = require('./shitposting/starters.js');
 const forFun = require('./shitposting/forFun.js');
 const money = require('./old_unused/money.js');
 const owner = require('./shitposting/owner.js');
 
-var myMegaHal = require('./myMegaHal.js');
+var myMegaHal = require('./tools_features/myMegaHal.js');
 
 
 /////////////////////// Functions //////////////////////////////////////////////////
