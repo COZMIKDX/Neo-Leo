@@ -74,7 +74,7 @@ const forFun = require('./shitposting/forFun.js');
 const money = require('./old_unused/money.js');
 const owner = require('./shitposting/owner.js');
 
-var myMegaHal = require('./tools_features/myMegaHal.js');
+let myMegaHal = require('./tools_features/myMegaHal.js');
 
 
 /////////////////////// Functions //////////////////////////////////////////////////
@@ -87,11 +87,11 @@ var myMegaHal = require('./tools_features/myMegaHal.js');
 }*/
 
 ///////////////////////////////////// variables ///////////////////////////////////////////
-var disabledChannelsList = [];
-var isDisabled = false;
+let disabledChannelsList = [];
+let isDisabled = false;
 //var conversate = false;
-var newMessage = false;
-var postCountObj = {postCount: 0};
+let newMessage = false;
+let postCountObj = {postCount: 0};
 
 
 /////////////////////////////////////// start  ////////////////////////////////////////////
@@ -142,7 +142,7 @@ client.on('messageCreate', (message) =>
   */
 
 /////////////////////////////////////// Prefix messages ///////////////////////////////////////
-  var idString;
+  let idString;
   const channels = ['365995102499373059', '163520281707544576']
 
   // if the message doesn't start with the prefix or the bot sent it, ignore it.
