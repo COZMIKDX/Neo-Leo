@@ -49,8 +49,7 @@ exports.starters = function(incomingMessage, message, isDisabled)
 
     if (incomingMessage.includes("kek") && !message.author.bot)
     {
-      let chance = myUtils.getRandomInt(1, 100);
-      if (chance > 75) {
+      if (myUtils.percentChanceCheck(25)) {
         message.channel.send("lel");
       }
       return;
@@ -58,8 +57,7 @@ exports.starters = function(incomingMessage, message, isDisabled)
 
     if (incomingMessage.includes("lel") && !message.author.bot)
     {
-      let chance = myUtils.getRandomInt(1, 100);
-      if (chance > 75) {
+      if (myUtils.percentChanceCheck(25)) {
         message.channel.send("kek");
       }
       return;

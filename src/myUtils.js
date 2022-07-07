@@ -9,3 +9,9 @@ exports.getRandomInt = function(min,max)
   
     return finalNum;
 }
+
+// Pass in the percent chance you want for something to happen.
+// ex)
+exports.percentChanceCheck = function(desiredChance) {
+  return Math.random() < desiredChance;
+}
