@@ -1,5 +1,6 @@
 const fs = require("fs");
 const myUtils = require('../myUtils.js');
+let parsedOb;
 
 // Right now, a new generator will be created each time the user calls a generation command.
 // This means the json file will be read and parsed each time.
@@ -9,8 +10,12 @@ const myUtils = require('../myUtils.js');
 class ItemGenerator {
     constructor(filepath) {
         let data = fs.readFileSync(filepath);
-        let parsedOb = JSON.parse(data);
+        parsedOb = JSON.parse(data);
 
+        
+    }
+
+    generate() {
         let numberOfFields = parsedOb.length;
         let output = "";
         for (field in parsedOb) {
