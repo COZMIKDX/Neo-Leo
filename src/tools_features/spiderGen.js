@@ -1,10 +1,13 @@
-const fs = require("fs");
-const myUtils = require('../myUtils.js');
+const path = require('path');
 const generator = require('./ItemGenerator.js');
+
 
 exports.spiderNameGen = function()
 {
-  let spodeGenerator = new generator("./spodeGen.json");
+  // I think the path is relative to the directory you launched the bot from.
+  // I'll make it absolute in case I move the ItemGenerator file later.
+  let absolutePath = path.resolve("./tools_features/spodeGen.json");
+  let spodeGenerator = new generator(absolutePath);
   return spodeGenerator.generate();
 }
 
