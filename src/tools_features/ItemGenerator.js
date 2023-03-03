@@ -14,20 +14,8 @@ class ItemGenerator {
     }
 
     generate() {
-        // console.log(parsedOb);
-        let numberOfFields = parsedOb.length;
         let output = "";
         for (let field in parsedOb) {
-            // console.log(parsedOb[field][0]);
-            // TODO: figure out how to tell if a field is the modifier field.
-            if (field == "Modifier") {
-                let rand = Math.random();
-                if (rand < .2) {
-                    let modifier = parsedOb[field][myUtils.getRandomInt(0,parsedOb)]
-                }
-            }
-            output = output + " " + parsedOb[field][myUtils.getRandomInt(0, parsedOb[field].length - 1)];
-
             let item = parsedOb[field][myUtils.getRandomInt(0, parsedOb[field].length - 1)];
             if (field == "Modifier") {
                 let rand = Math.random();
@@ -40,7 +28,7 @@ class ItemGenerator {
                     }
                 }
             }
-            else {
+            else { // add any non-modifier item to the string.
                 output = output + " " + item;
             }
         }
