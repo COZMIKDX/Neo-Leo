@@ -14,11 +14,13 @@ class ItemGenerator {
     }
 
     generate() {
+        // console.log(parsedOb);
         let numberOfFields = parsedOb.length;
         let output = "";
-        for (field in parsedOb) {
+        for (let field in parsedOb) {
+            // console.log(parsedOb[field][0]);
             // TODO: figure out how to tell if a field is the modifier field.
-            output = output + " " + field[myUtils.getRandomInt(0, numberOfFields - 1)];
+            output = output + " " + parsedOb[field][myUtils.getRandomInt(0, parsedOb[field].length - 1)];
         }
 
         return output;
