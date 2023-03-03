@@ -69,6 +69,7 @@ const prefixCommands = require('./commands/prefixCommands.js');
 const disabledChannels = require('./old_unused/disabledChannels.js');
 const quote = require('./old_unused/quote.js');
 const spiderGen = require('./tools_features/spiderGen.js');
+const potionGen = require('./tools_features/potionGen.js');
 const starters = require('./shitposting/starters.js');
 const forFun = require('./shitposting/forFun.js');
 const money = require('./old_unused/money.js');
@@ -266,6 +267,7 @@ switch (command)
 		client.guilds.forEach(element => console.log(element.name));
 
 	case "potion":
+		message.channel.send(potionGen.potionGen());
 		break;
 
 	case "newpotion":
