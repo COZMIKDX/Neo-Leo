@@ -11,8 +11,6 @@ class ItemGenerator {
     constructor(filepath) {
         let data = fs.readFileSync(filepath);
         parsedOb = JSON.parse(data);
-
-        
     }
 
     generate() {
@@ -26,3 +24,5 @@ class ItemGenerator {
         return output;
     }
 }
+
+module.exports = ItemGenerator;
