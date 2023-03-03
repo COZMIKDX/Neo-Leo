@@ -17,9 +17,9 @@ class ItemGenerator {
         let output = "";
         for (let field in parsedOb) {
             let item = parsedOb[field][myUtils.getRandomInt(0, parsedOb[field].length - 1)];
-            if (field == "Modifier") {
+            if (field == "Modifiers") {
                 let rand = Math.random();
-                if (rand < .2) {
+                if (rand < .2) { // add the modifier if we hit the 20% chance
                     if (item.startsWith(',')) {
                         output = output + item;
                     }
