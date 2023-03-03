@@ -264,6 +264,13 @@ switch (command)
 		
 	case "guilds" :
 		client.guilds.forEach(element => console.log(element.name));
+
+	case "potion":
+		break;
+
+	case "newpotion":
+		message.reply("https://potion-generator-dump.glitch.me/potion-dump");
+		break;
 	}
 });
 
