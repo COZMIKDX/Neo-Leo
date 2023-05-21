@@ -35,7 +35,8 @@ exports.caiden = (message) =>
 const leoImages = [
 	"https://i.imgur.com/HpFkiYt.png",
 	"https://i.imgur.com/qbLXdfb.png",
-	"https://i.imgur.com/mRWnbAA.png"
+	"https://i.imgur.com/mRWnbAA.png",
+	"https://i.imgur.com/BVzhJ6L.png"
 ];
 exports.leo = (message) =>
 {
